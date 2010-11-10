@@ -26,3 +26,9 @@ channel <a href="irc://chat.freenode.net/licq">#licq on
 chat.freenode.net</a>. Drop by this IRC channel if you are interested in
 helping out, want some help, or just wanna hang out with the people developing
 your favourite instant messaging client.</p>
+
+<h2>News</h2>
+{% for post in site.posts limit: 10 %}
+  <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+  <p>{{ post.content }}</p>
+{% endfor %}
