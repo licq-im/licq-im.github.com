@@ -4,6 +4,8 @@ body
   margin: 5px;
 }
 
+h1 { margin: .15em 1em 0.5em 0 }
+
 #banner
 {
   background: url(images/title_right.gif) no-repeat top right;
@@ -63,5 +65,11 @@ body
 
 #content
 {
-  padding: 1ex;
+  padding: 1ex 1ex 1ex 16px;
+  position: relative;
+}
+
+#content h1, #content h2, #content h3
+{
+  margin-left: -16px;
 }
