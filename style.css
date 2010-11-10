@@ -48,6 +48,7 @@ h1 { margin: .15em 1em 0.5em 0 }
 {
   border: 0px;
   color: #55654F;
+  text-decoration: none;
 }
 
 #nav li a:hover
