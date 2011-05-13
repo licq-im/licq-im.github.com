@@ -1,0 +1,252 @@
+---
+layout: default
+title: Coding Style
+---
+<h1>Coding style</h1>
+<p>This document describes the preferred coding and documentation style for Licq and its plugins.</p>
+
+<h2>Who should read this?</h2>
+<p>This document is written for people who do development on Licq. Everyone who modifies parts of the source is a potential developer and should read on.</p>
+
+<h2>Why should i code and document my source in a special way?</h2>
+<p>Many people develop on the same code and everyone wants to easily read and understand it. You have your own style of coding of course and we respect this fact. But when you work on Licq sources you should respect our coding style as well and anyways it's a great improvement when we all agree to a common style so that everyone can easily read understand the code.</p>
+
+<h2>General</h2>
+
+<h3>Indentation</h3>
+<p>Indentation is done with two spaces, <strong>not</strong> tabs. Every editor worth its name can be configured to map the tab key to two spaces. Use this! We repeat: two spaces, no tabs.<br/>
+<strong>Rationale for spaces instead of tabs:</strong> None, it's just the way it is. Accept it!</p>
+
+<h4>switch statements</h4>
+<p>Indent case labels and clearly comment when you don't have a break at the end of a case branch.</p>
+
+<pre>
+// Do like this
+switch (clientVersion)
+{
+  case ICQ_VERSION_9:
+    useXtraz = true;
+    // Fall through
+  case ICQ_VERSION_8:
+    port = DEFAULT_ICQ_PORT;
+    break;
+}
+
+// Not like this
+switch (clientVersion)
+{
+case ICQ_VERSION_9:
+  useXtraz = true;
+case ICQ_VERSION_8:
+  port = DEFAULT_ICQ_PORT;
+  break;
+}
+</pre>
+
+<h3>Braces</h3>
+<p>Braces (opening and closing) should be placed on a line for themselves. The only exception to this rule is class (and struct) definitions where a ; should be appended after the closing brace. Example:</p>
+<pre>
+if (isActive() || force)
+{
+  // do this
+}
+else
+{
+  // do that
+}
+</pre>
+
+<p>If the statement body is a simple oneliner, you may skip the braces. But you wont be shot for using braces there as well. Use your own judgement and choose what you think makes the code the most readable for others.</p>
+
+<h3>Parens () with keywords and functions</h3>
+<ul>
+  <li>Do not put parens next to keywords. Put a space between.</li>
+  <li>Do put parens next to function names.</li>
+  <li>Do not use parens in return statements when it's not necessary.</li>
+</ul>
+
+<p><strong>Rationale:</strong> Keywords are not functions. By putting parens next to keywords keywords and function names are made to look alike.</p>
+
+<p>Example:</p>
+<pre>
+if (true)
+{
+  const int max = std::max(1, 2);
+  return max;
+}
+</pre>
+
+<h3>Breaking long lines</h3>
+<p>Try to break lines so that they don't exceed 80 characters. <strong>Rationale:</strong> It makes it possible to have two code windows next to each other, which is better than having one wide window. Use your judgment when breaking lines and indent the resulting line with 4 spaces (double indention).</p>
+
+<p>Example:</p>
+<pre>
+while (plugin-&gt;isTheNameOfThisFunctionLongEnough() ||
+    plugin-&gt;maybeThisNameIsBetter())
+{
+  // Do something
+}
+std::string&amp; pluginName =
+    plugin-&gt;thisFunctionNameIsWayTooLongButIllustratesHowToBreakAssignmentLines();
+</pre>
+
+<h2>Naming</h2>
+<p>First: remember that code is written once, but read numerous times. This is probably the most repeated sentence in coding style documents, but for good reasons. Code is read more times than it's written! Keep this in mind when reading the rest of this section.</p>
+
+<p>Choosing a good name is a science in itself. But keep the above in mind (you know, code is read more than it's written), and choose descriptive names. Don't choose overly long names, but not too short either. Generally, the length should be related to the scope that the entity is visible in. E.g. member variables should have a longer name than the counter in a tight for-loop.</p>
+
+<p><strong>Take the time to come up with a good name.</strong> Remember, code is written once...</p>
+
+<p>Don't use <a href="http://en.wikipedia.org/wiki/Hungarian_notation">Hungarian notation</a>. <strong>Rationale:</strong> In a strongly type language such as C++, the programmer is assisted by the compiler in making sure that two variables of different types can't be assigned to each other (unless implicit casting is in effect, but that's a different issue). But more importantly, Hungarian notation makes the code harder to read.</p>
+
+<p>Example:</p>
+<pre>
+bool isActive; // Good name
+bool bActive;  // Bad name, don't use Hungarian notation
+</pre>
+
+<h3>Classes, structs and typedefs</h3>
+<p>Classes, structs and typedefs should be named using the CamelCase style with a upper cased first letter.</p>
+
+<p>Examples:</p>
+<pre>
+class PluginObserver;
+struct LinkedList;
+typedef std::list&lt;Plugin&gt; PluginList;
+</pre>
+
+<p>The declaration for e.g. a class named PluginObserver should be in the file pluginobserver.h and the definition (or implementation) in pluginobserver.cpp. Except in some special cases, the rule is one class per file.</p>
+
+<h3>Methods and functions</h3>
+<p>Methods (member functions) and regular functions should also use CamelCase naming, but with a lower cased first letter.</p>
+
+<p>Examples:</p>
+<pre>
+int Plugin::getId() const;
+void reset();
+</pre>
+
+<h3>Member variables (attributes)</h3>
+<p>Historically, member variables have been prefixed with 'm' or 'm_' to show that they're member and not local variables. The problem with this (as with all Hungarian notation) is that it makes the code harder to read. But being able to separate member and local variables is important.</p>
+
+<p>In Licq we prepend all member variables with 'my' to show that they are "owned" by the class and then use CamelCase for the rest of the name, e.g. myMemberVariable.</p>
+<ul>
+  <li>Setters are easily created: <tt>void setMyVar(int var) { myVar = var; }</tt></li>
+  <li>You don't get stuck on a 'm' or 'm_' when reading code (my is a word with meaning), but you're still able to tell member and local variables apart.</li>
+</ul>
+
+<h3>Function arguments and local variables</h3>
+<p>CamelCase with first letter in lower case.</p>
+
+<p>Examples:</p>
+<pre>
+int counter;
+Plugin* icqPlugin;
+</pre>
+
+<h2>Commenting</h2>
+<ul>
+  <li>Use <a href="http://www.doxygen.org/">Doxygen</a> tags to document classes, methods and functions.</li>
+  <li>Document intent and stuff that isn't obvious from reading the code.</li>
+  <li>Don't add useless comments. "Add 1 on i" is not a good comment.</li>
+  <li>When fixing a bug, add a reference to the bug report if it makes sense. But don't use it as a way to avoid writing a good, descriptive comment.</li>
+  <li>Comments should in almost all cases be put on a separate row before the code in question.</li>
+</ul>
+
+<h3>Doxygen</h3>
+<p>Doxygen comments should exist for (at least) all public classes and methods, and it should be in the header files. Before committing, generate the doxygen documentation and check it to make sure it's sane.</p>
+
+<p>An example class follows.</p>
+<pre>
+/**
+ * @class ExampleClient
+ * Exemplifies the usage of Doxygen comments.
+ * Here follows an longer comment that gives a more in-depth
+ * overview of this class.
+ */
+class ExampleClient
+{
+private:
+  /// Greeting to send when connecting (since this is a one-liner, we use ///)
+  int myGreeting;
+
+public:
+  /**
+   * Construct a new client.
+   *
+   *  @param[in] greeting String to send when connecting.
+   */
+  ExampleClient(const std::string&amp; greeting);
+
+  /**
+   * Connect to the example server.
+   * After a connection is established, greeting messages
+   * are exchanged and the server's response is returned.
+   *
+   * @param[in] server Server to connect to.
+   * @param[out] ident String returned from the server as identification.
+   * @return True if the connection was established; otherwisefalse.
+   */
+  bool connect(const std::string&amp; server, std::string* ident);
+};
+</pre>
+
+<h2>Variables and Data Types</h2>
+<ul>
+  <li>Use <tt>const</tt> on local variables and arguments as a way to communicate that the variable is not supposed to be changed.</li>
+  <li>Keep '*' and '&amp;' close to the <em>type</em>, not the <em>name</em>: "<tt>Plugin* plugin;</tt>" <strong>not</strong> "<tt>Plugin *plugin</tt>".</li>
+  <li>Use <a href="http://www.boost.org/libs/smart_ptr/smart_ptr.htm">smart pointers</a> where it makes sense.</li>
+  <li>Never use global variables. Use the <a href="http://en.wikipedia.org/wiki/Singleton_pattern">Singleton pattern</a> instead.</li>
+  <li>Unless the integer size matters, use <tt>int</tt> or <tt>unsigned int</tt>. Avoid using <tt>short</tt>, <tt>long</tt>, etc. unless it's really necessary.</li>
+  <li>When integer size matters, for example in protocol handling, include <tt>stdint.h</tt> and use <tt>uint16_t</tt>, <tt>int64_t</tt>, etc. Do <strong>not</strong> use <tt>long</tt> as it has different size on 32 bit and 64 bit systems.</li>
+  <li>Don't assume the integer type for defined data types, for example <tt>size_t</tt> and <tt>time_t</tt>, as they may be defined differently on another systems. Use "<tt>size_t len</tt>", <strong>not</strong> "<tt>unsigned int len</tt>".</li>
+</ul>
+
+<h2>The rest</h2>
+<p>Additional pointers:</p>
+<ul>
+<li>Don't write acronyms or abbrevations in all upper case. It's <tt>getUrl()</tt> <strong>not</strong> <tt>getURL()</tt>.</li>
+<li>Prepend getters and setters with get and set respectively. Example: <tt>getVar()</tt> and <tt>setVar(int var)</tt>.</li>
+<li>If a method has an empty body, put a comment there to tell the reader that it was left empty intentionally.
+<pre>
+Plugin::~Plugin()
+{
+  // Empty
+}
+</pre></li>
+  <li>One-liners:
+<pre>
+// Prefer this
+if (user == NULL)
+  return false;
+
+// to this
+if (user == NULL) return false;
+</pre></li>
+  <li>Don't compare boolean values. Use <tt>if (isActive())</tt>, <strong>not</strong> <tt>if (isActive() == true)</tt>.</li>
+  <li>When comparing integers and pointers, compare against a value.
+<pre>
+// Do like this
+if (size != 0 &amp;&amp; pointer == NULL)
+
+// Not like this
+if (size &amp;&amp; !pointer)
+
+// However, when just checking a flag it's ok to omit the " != 0 " part
+if (userMode &amp; VisibleFlag)
+</pre></li>
+  <li>All code should compile without warnings.</li>
+  <li>Use named constants (e.g. ICQ_VERSION_8, LIST_SIZE), don't use magic numbers.</li>
+</ul>
+
+<h2>Post scriptum</h2>
+<p>Two spaces, not tabs. Braces on a line for themselves, with the same indention level as the statement (if, for etc) it belongs to. Use common sense and ask on the licq-dev MailingList if you additional questions after reading this.</p>
+
+<p>For emacs users, you can use some stuff from <a href="http://svn.ejohansson.se/repos/misc/home/.emacs.d/init.el">Erik's .emacs file</a>.</p>
+
+<h3>Recommended reading</h3>
+<ul>
+  <li><a href="http://www.amazon.com/Code-Complete-Second-Steve-McConnell/dp/0735619670">Code Complete, 2nd edition</a> - Steve McConnell</li>
+  <li><a href="http://www.amazon.com/Coding-Standards-Guidelines-Practices-Depth/dp/0321113586">C++ Coding Standards: 101 Rules, Guidelines, and Best Practices</a> - Herb Sutter, Andrei Alexandrescu</li>
+</ul>
+
