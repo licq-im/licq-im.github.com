@@ -1,0 +1,92 @@
+---
+layout: default
+title: Making a Licq Release
+---
+<h1>Making a Licq Release</h1>
+<p>This page means to document all the steps needed for building an offical Licq package and releasing it.</p>
+
+<h2>Prerequisites</h2>
+<p>The following is needed to create a package</p>
+<ul>
+  <li>GIT client and build environment for normal Licq development.</li>
+  <li>GnuPG installed and a default key created (this will be used to sign the package).</li>
+</ul>
+
+<p>The following is needed to create an offical release:</p>
+<ul>
+  <li>GIT access with privileges to commit changes.</li>
+  <li>Access to Licq project on <a href="http://sourceforge.net/projects/licq/">SourceForge</a> with privileges to upload new packages.</li>
+  <li>Membership in <a href="mailinglists.html">Licq mailing lists</a> to post announcement in licq-announce, licq-dev and licq-users.</li>
+</ul>
+
+<h2>Preparations</h2>
+<p>The following things should be ready before releasing a new version:</p>
+<ul>
+  <li>Move the old <tt>README</tt> file to <tt>doc/README-&lt;oldversion&gt;</tt> and create a new README file.</li>
+  <li>Update the <tt>doc/CHANGELOG</tt> file.</li>
+  <li>Update the Licq version in the build files. Note that this must be done for the daemon and for each plugin.<br/>
+    For Licq this is done in the file <tt>licq/cmake/LicqVersion.cmake</tt> and for plugins in the file <tt>&lt;plugin&gt;/version.cmake</tt>.</li>
+  <li>Update the Licq version in <tt>licq/doc/README</tt> and <tt>licqweb/README</tt>.</li>
+  <li>Make sure the copyright year in <tt>licq/LICENSE</tt> includes the current year.</li>
+  <li>Also disable unit testes by setting BUILD_TESTS to OFF in <tt>licq/CMakeLists.txt</tt>.
+   Don't forget to reenable these after the final package has been delivered.</li>
+</ul>
+
+<h2>Building a Package</h2>
+<p>To create a package, perform the following steps:</p>
+<ol>
+  <li>Clone the Licq repository if you don't already have a source tree.</li>
+  <li>Create a temporary directory outside the repository.</li>
+  <li>Export the source tree: <tt>git archive &lt;commit&gt; | tar -x -C &lt;tmpdir&gt;</tt></li>
+  <li>Remove the symlinks in the plugins directory and replace them with the real plugins.</li>
+  <li>Rename the licq directory to include the release version.</li>
+  <li>Create and compress a package.</li>
+  <li>Sign the package.</li>
+  <li>Tag the GIT version used to build the package.</li>
+</ol>
+
+<p>Full Example:</p>
+<pre>
+# mkdir /var/tmp/pkglicq
+# git archive 1.5-stable | tar -x -C /var/tmp/pkglicq
+# cd /var/tmp/pkglicq/licq/plugins
+# rm aosd auto-reply console forwarder jabber licqweb msn osd qt4-gui rms
+# cd ../..
+# mv aosd auto-reply console forwarder jabber licqweb msn osd qt4-gui rms licq/plugins/
+# mv licq licq-1.5.1-rc1
+# tar --owner nobody --group nogroup -cf - licq-1.5.1-rc1 | bzip2 --best -c &gt; licq-1.5.1-rc1.tar.bz2
+# gpg --sign --armor --detach-sign --output licq-1.5.1-rc1.tar.bz2.sign licq-1.5.1-rc1.tar.bz2
+# git tag -a licq-1.5.1-rc1 1.5-stable
+# git push origin licq-1.5.1-rc1
+</pre>
+
+<h2>Distributing and Announcing</h2>
+<p>An official release should be distributed and announced at the following locations:</p>
+<ul>
+  <li>Upload packages and sign files to <a href=>http://sourceforge.net/projects/licq/">SourceForge</a> or have someone else do if it you do not have access yourself.</li>
+  <li>Update <a href=download.html">the download page</a> with links to the new files.<!-- Also link to the public GnuPG key needed to verify the signed packages.--></li>
+  <li>Create a <a href="news.html">news entry</a> for the start page announcing the new release.</li>
+  <li>Post an announcement to the <a href="mailinglists.html">Licq mailing lists</a> licq-announce, licq-dev and licq-users.</li>
+  <li>Create news entry on <a href="http://sourceforge.net/projects/licq/">SourceForge</a>.</li>
+  <li>Announce the new version on <a href="http://www.freshmeat.net/">FreshMeat</a>.</li>
+</ul>
+
+<h2>Release Plan</h2>
+<p>First and most importantly, a release should only be performed when the release branch is stable and fully usable. Wait for ongoing changes to be completed rather then releasing in the middle of a high activity period.</p>
+
+<p>Make a first release candidate (package with suffix <tt>-rc1</tt>) and release according to instructions above.</p>
+
+<p>When a release candidate has been released a code freeze should be in place with the following exceptions:</p>
+<ul>
+  <li>Bug fixes (Important corrections must be performed before the final release.)</li>
+  <li>Translations (Translation files can be updated without affecting the release and translators may need the extra time as well.)</li>
+  <li>Editorial changes (Comments and documentation files can be modified without affecting the release, however avoid changing translatable text strings as this might affect translations.)</li>
+</ul>
+
+<p>After two weeks has passed, either make a new release candidate (<tt>-rc2</tt>) or a final release.<br/>
+A guideline for which to do is that if no bugfixes (or other code changes) has been made since the last release candidate then a final release can be made.<br/>
+If any changes were needed, make a new release candidate instead. If for some reason the first release candidate had serious problems you might want to make the second release candidate sooner than the planned two weeks.</p>
+
+<p>If release candidate two was needed, wait another week and check again if a final release can be made or if a third release candidate is needed.<br/>
+It should be enough to wait two weeks only after the first release candidate. After the second release candidate wait one week between each release.</p>
+
