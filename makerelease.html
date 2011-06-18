@@ -24,40 +24,29 @@ title: Making a Licq Release
 <ul>
   <li>Move the old <tt>README</tt> file to <tt>doc/README-&lt;oldversion&gt;</tt> and create a new README file.</li>
   <li>Update the <tt>doc/CHANGELOG</tt> file.</li>
-  <li>Update the Licq version in the build files. Note that this must be done for the daemon and for each plugin.<br/>
-    For Licq this is done in the file <tt>licq/cmake/LicqVersion.cmake</tt> and for plugins in the file <tt>&lt;plugin&gt;/version.cmake</tt>.</li>
+  <li>Update the Licq version in the build files. Note that this must be done
+    for the daemon and for each plugin.<br/>  For Licq this is done in the
+    file <tt>licq/cmake/LicqVersion.cmake</tt> and for plugins in the
+    file <tt>&lt;plugin&gt;/version.cmake</tt>
+    (using <tt>scripts/set-version</tt> makes it easier).</li>
   <li>Update the Licq version in <tt>licq/doc/README</tt> and <tt>licqweb/README</tt>.</li>
   <li>Make sure the copyright year in <tt>licq/LICENSE</tt> includes the current year.</li>
-  <li>Also disable unit testes by setting BUILD_TESTS to OFF in <tt>licq/CMakeLists.txt</tt>.
-   Don't forget to reenable these after the final package has been delivered.</li>
 </ul>
 
 <h2>Building a Package</h2>
 <p>To create a package, perform the following steps:</p>
 <ol>
   <li>Clone the Licq repository if you don't already have a source tree.</li>
-  <li>Create a temporary directory outside the repository.</li>
-  <li>Export the source tree: <tt>git archive &lt;commit&gt; | tar -x -C &lt;tmpdir&gt;</tt></li>
-  <li>Remove the symlinks in the plugins directory and replace them with the real plugins.</li>
-  <li>Rename the licq directory to include the release version.</li>
-  <li>Create and compress a package.</li>
-  <li>Sign the package.</li>
-  <li>Tag the GIT version used to build the package.</li>
+  <li>Create a git tag.</li>
+  <li>Create tarball from the git tag and sign it.</li>
+  <li>Push the tag.</li>
 </ol>
 
 <p>Full Example:</p>
 <pre>
-# mkdir /var/tmp/pkglicq
-# git archive 1.5-stable | tar -x -C /var/tmp/pkglicq
-# cd /var/tmp/pkglicq/licq/plugins
-# rm aosd auto-reply console forwarder jabber licqweb msn osd qt4-gui rms
-# cd ../..
-# mv aosd auto-reply console forwarder jabber licqweb msn osd qt4-gui rms licq/plugins/
-# mv licq licq-1.5.1-rc1
-# tar --owner nobody --group nogroup -cf - licq-1.5.1-rc1 | bzip2 --best -c &gt; licq-1.5.1-rc1.tar.bz2
-# gpg --sign --armor --detach-sign --output licq-1.5.1-rc1.tar.bz2.sign licq-1.5.1-rc1.tar.bz2
 # git tag -a licq-1.5.1-rc1 1.5-stable
-# git push origin licq-1.5.1-rc1
+# ./scripts/create-licq-tarball -b -s -t licq-1.5.1-rc1
+# git push --tags
 </pre>
 
 <h2>Distributing and Announcing</h2>
