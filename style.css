@@ -6,6 +6,12 @@ body
 
 h1 { margin: .15em 1em 0.5em 0 }
 
+#banner_back
+{
+  background: url(/images/title_center.gif) repeat-x top left;
+  height: 76px;
+}
+
 #banner
 {
   background: url(/images/title_right.gif) no-repeat top right;
