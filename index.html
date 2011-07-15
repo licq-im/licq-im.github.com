@@ -30,5 +30,5 @@ your favourite instant messaging client.</p>
 <h2>News</h2>
 {% for post in site.posts limit: 10 %}
   <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
-  <p>{{ post.content }}</p>
+  {{ post.content }}
 {% endfor %}
