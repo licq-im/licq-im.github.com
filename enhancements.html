@@ -1,0 +1,123 @@
+---
+layout: default
+title: Enhancements
+---
+<h1>Requested Enhancements</h1>
+<p>The following is a list of enhancements that has been requested over the years. Note that just because something is listed here is no guarantee that it will ever be implemented, this list exist only as hints for developers on what might be worth doing.</p>
+
+<h2>Qt-Gui Plugin</h2>
+<dl>
+<dt>Popup when contact has birthday</dt>
+<dd><i>Submitted 2004-09-22 as trac ticket #600.</i></dd>
+
+<dt>Display extended icons in separate column</dt>
+<dd>If alias is too long then extended icons are not displayed.<br/>
+<i>Submitted 2005-02-16 as trac ticket #695.</i></dd>
+
+<dt>Make contact list dockable (like KDE panel)</dt>
+<dd><i>Submitted 2005-07-07 as trac ticket #745.</i></dd>
+
+<dt>Detailed information i dock icon tooltip</dt>
+<dd>It would be very nice to place more info about pending messages to dock icon tooltip, e.g. who sent the message, not only the count.<br/>
+For example:
+<pre>
+1 msg from Peter
+3 msgs from Carol
+</pre>
+<i>Submitted 2005-10-04 as trac ticket #776.</i></dd>
+
+<dt>Show encrypted messages in different colour</dt>
+<dd><i>Submitted 2005-12-12 as trac ticket #818.</i></dd>
+
+<dt>Add protocol specific icons for Jabber<dt>
+<dd><i>Submitted 2010-10-08 as trac ticket #1723.</i></dd>
+
+</dl>
+<h2>Console Plugin</h2>
+<dl>
+<dt>Make it easier to enter names with weird characters</dt>
+<dd>It should be possible to refer to contacts (without using UIN) even if their name has weird characters.<br/>
+<i>Submitted 2003-06-25 as trac ticket #459.</i></dd>
+
+<dt>Show SSL status in contact list</dt>
+<dd>Could be implemented as a mark next to the name, like the lock in the GUI.<br/>
+<i>Submitted 2001-05-05 as Debian ticket <a href="http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=96445">#96445</a> and trac ticket #642.</i></dd>
+
+</dl>
+<h2>File Transfer</h2>
+<dl>
+<dt>Support transferring directories</dt>
+<dd><i>Submitted 2000-03-29 as trac ticket #875.</i></dd>
+
+<dt>Secure file transfers</dt>
+<dd>If a SSL channel is setup, use it for  file transfers as well.</br>
+<i>Submitted 2000-12-21 as trac ticket #1165.</i></dd>
+
+<dt>Skip individual files</dt>
+<dd>I think it would be great if there was a button in the file-transfer window which would allow to skip a file at user's request. Currently it is either you go through all the download or you cancel it alltogether.<br/>
+<i>Submitted 2001-01-24 as trac ticket #1198.</i></dd>
+
+<dt>Add option to control file transfer up-/download speed</dt>
+<dd><i>Submitted 2004-01-13 as trac ticket #504.</i></dd>
+
+</dl>
+<h2>ICQ Protocol</h2>
+<dl>
+<dt>Update DC protocol to use version 10</dt>
+<dd><i>Submitted 2006-03-16 as trac ticket #833.</i></dd>
+
+<dt>Allow unregistering ICQ account</dt>
+<dd><i>Submitted 2001-06-10 as trac ticket #1294.</i></dd>
+
+<dt>Secure user registration</dt>
+<dd>ICQ 5.1 supports user registration over SSL which doesn't send the password in plain text.</br>
+<i>Submitted 2006-10-19 as trac ticket #1423.</i></dd>
+
+</dl>
+<h2>Other</h2>
+<dl>
+<dt>Netdetect (like windows ICQ)</dt>
+<dd>Netdetect is a tool that stays in tray and starts ICQ when an Internet connection is detected.<br/>
+<i>Submitted 2001-08-25 as trac ticket #1338.</i></dd>
+
+<dt>Auto request away messages</dt>
+<dd>Away messages could be auto fetched when a contact goes away and then be presented in contact list tooltip.<br/>
+Note: For ICQ, it varies between clients if the message is set before or after changing status so auto fetching may get an old message.<br/>
+<i>Submitted 2004-07-29 as trac ticket #560.</i></dd>
+
+<dt>Multiple accounts per protocol</dt>
+<dd>This will require lots of changes and much work and will probably not happen any time soon, but new code should be written with this in consideration to make it possible to do this in the future.<br/>
+<i>Submitted 2006-04-18 as trac ticket #842.</i></dd>
+
+<dt>Handle contact as SPAM</dt>
+<dd>Add a command to add contact to ignore list and report as spam to icq.com.<br/>
+<i>Submitted 2007-01-29 as trac ticket #1484.</i></dd>
+
+<dt>Skinnable popup labels (like Miranda)</dt>
+<dd>Miranda has popups that are more advanced than the tooltip available from the tray icon. These popups show various useful information, such as arrived messages, status changes, typing notification, etc.<br/>
+Could either done in GUI, OSD or new plugin.<br/>
+<i>Submitted 2007-02-22 as trac ticket #1495.</i></dd>
+
+<dt>Visible for all users in contact list</dt>
+<dd>Configuration option to always have all contacts in visible list.<br/>
+<i>Submitted 2007-07-01 as trac ticket #1524.</i></dd>
+
+<dt>Add support for UPnP</dt>
+<dd><i>Submitted 2007-12-06 as trac ticket #1604.</i></dd>
+
+<dt>Force local groups to be same as server side groups</dt>
+<dd>Add an option to only use server side groups, e.g. local groups will be kept in sync with server to avoid any divergation.<br/>
+<i>Submitted 2008-09-05 as trac ticket #1643.</i></dd>
+
+<dt>History database converter from Mirablis ICQ</dt>
+<dd>A history database converter might encourage more users to switch to Licq (and Linux).<br/>
+<i>Submitted 2011-07-19 as trac ticket #1318.</i></dd>
+
+<dt>Add DBUS support for controlling Licq</dt>
+<dd>Qt-Gui had DCOP support allowing some control over Licq from other applications. DBUS has replaced DCOP in KDE4 and is also used with other systems. This should probably be a separate plugin.</dd>
+
+<dt>Multi-user chat</dt>
+<dd>The current multi-user chat support is ICQ specific and should be replaced by a generic implementation that could be properly used by all protocols. A new GUI will probably also be needed. Caution should be taken to make sure MSN protocol isn't broken as the actual mode of sending messages is to open a chat and invite the other contact making a MSN conversation a potential multi-user chat at all times.<br/>
+It would also be great if multi-user chats could be logged. This is probably just a matter of deciding on how history files should be named.</dd>
+
+</dl>
