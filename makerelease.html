@@ -44,8 +44,8 @@ title: Making a Licq Release
 
 <p>Full Example:</p>
 <pre>
-# git tag -a licq-1.5.1-rc1 1.5-stable
-# ./scripts/create-licq-tarball -b -s -t licq-1.5.1-rc1
+# git tag -a licq-1.5.1 1.5-stable
+# ./scripts/create-licq-tarball -b -s -t licq-1.5.1
 # git push --tags
 </pre>
 
@@ -61,6 +61,7 @@ title: Making a Licq Release
   <li>Announce the new version on <a href="http://www.freshmeat.net/">FreshMeat</a>.</li>
 </ul>
 
+<!--
 <h2>Release Plan</h2>
 <p>First and most importantly, a release should only be performed when the release branch is stable and fully usable. Wait for ongoing changes to be completed rather then releasing in the middle of a high activity period.</p>
 
@@ -79,14 +80,16 @@ If any changes were needed, make a new release candidate instead. If for some re
 
 <p>If release candidate two was needed, wait another week and check again if a final release can be made or if a third release candidate is needed.<br/>
 It should be enough to wait two weeks only after the first release candidate. After the second release candidate wait one week between each release.</p>
+-->
 
 <h2>After Releasing</h2>
-<p>After the final release is complete, the following steps should also be performed.</p>
+<p>After the release is complete, the following steps should also be performed.</p>
 <ul>
   <li>In the release branch, update the Licq version for next maintenance release (for example <tt>licq-1.6.4</tt> becomes <tt>licq-1.6.5-dev</tt>).</li>
   <li>In the release branch, move the release specific <tt>licq/README</tt> to <tt>licq/doc/README-&lt;version&gt;</tt> and restore the development text in <tt>licq/README</tt>.</li>
 </ul>
 
+<!--
 <h2>Branching</h2>
 <p>The following is an example of how to branch for a main release and which changes go where. (Top posted to match git log.)</p>
 <pre>
@@ -135,3 +138,4 @@ It should be enough to wait two weeks only after the first release candidate. Af
 | |
 ...
 </pre>
+-->
